@@ -20,7 +20,5 @@ public class HelloWorldServlet extends HttpServlet {
         }
         count += 1;
         out.println("The count is " + count);
-
-
     }
 }
