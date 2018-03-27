@@ -18,7 +18,7 @@
     }
 
     .login {
-        height: 1000px;
+        height: 500px;
         background: lightgrey;
         font-size:36px;
     }

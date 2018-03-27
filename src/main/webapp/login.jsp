@@ -29,12 +29,13 @@
 
 <div class="login">
     <form action="login.jsp" method="post">
-        <p>Please enter username and password.</p>
+        Please enter username and password.<br>
         Username:<input type="text" name="name" /><br>
         Password:<input type="password" name="password" /><br>
         <input type="submit" value="Submit">
     </form>
 </div>
+<div class="parallax"></div>
 
 </body>
 </html>
