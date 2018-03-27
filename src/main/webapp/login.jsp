@@ -2,29 +2,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String name = request.getParameter("name");
-    String password = request.getParameter("password");
-
-    if (name == null) {
-        name = "";
-    }
-    if (password == null) {
-        password = "";
-    }
-    if ((name.equals("admin") && (password.equals("password")))) {
-        response.sendRedirect("/profile.jsp");
+    if (request.getMethod().equalsIgnoreCase("post")) {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        if ((name.equals("admin") && (password.equals("password")))) {
+            response.sendRedirect("/profile.jsp");
+        }
     }
 %>
-
-<jsp:include page="partials/navbar.jsp"/>
-<jsp:include page="partials/CSS.jsp"/>
 
 <html>
 <head>
     <title>LogIn</title>
+    <jsp:include page="partials/head.jsp"/>
 </head>
 <body>
-
+<jsp:include page="partials/navbar.jsp"/>
 <div class="parallax"></div>
 
 <div class="login">
