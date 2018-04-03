@@ -1,7 +1,7 @@
 public class Config {
-    private String url = "jdbc:mysql://localhost/adlister_db";
+    private String url = "jdbc:mysql://localhost/adlist_db?serverTimezone=UTC&useSSL=false";
     private String username = "adlist";
-    private String password = "adlistP@ss123";
+    private String password = "adlistP@ass123";
 
     public String getUrl() {
         return url;

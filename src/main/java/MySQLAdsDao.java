@@ -16,7 +16,9 @@ public class MySQLAdsDao implements Ads{
                     config.getPassword()
             );
         } catch (SQLException e) {
-            System.out.println("Error accessing mySQL");
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
         }
     }
 
@@ -25,7 +27,7 @@ public class MySQLAdsDao implements Ads{
         List<Ad> ads = new ArrayList<>();
         try {
             Statement stmt = connection.createStatement();
-            String queryString = "SELECT * FROM ads";
+            String queryString = "SELECT * FROM ads;";
             ResultSet rs = stmt.executeQuery(queryString);
 
             while (rs.next()) {
