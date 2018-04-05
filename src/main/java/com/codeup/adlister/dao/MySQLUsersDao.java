@@ -7,14 +7,15 @@ import java.sql.*;
 
 public class MySQLUsersDao implements Users {
     private Connection connection;
+    Config config = new Config();
 
     public MySQLUsersDao() {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                    Config.url,
-                    Config.user,
-                    Config.password
+                    config.getUrl(),
+                    config.getUser(),
+                    config.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
