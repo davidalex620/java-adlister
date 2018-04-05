@@ -1,13 +1,11 @@
 package com.codeup.adlister.dao;
-
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
 
 public class MySQLUsersDao implements Users {
-
-    private Connection connection = null;
+    private Connection connection;
 
     public MySQLUsersDao() {
         try {
@@ -18,19 +16,14 @@ public class MySQLUsersDao implements Users {
                     Config.password
             );
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            throw new RuntimeException("Error connecting to the database!", e);
         }
-
     }
-
-
 
     @Override
     public User findByUsername(String username) {
-
-        String sql = "SELECT * users WHERE username = ?";
+        //write the sql query for findByUsername
+        String sql = "SELECT * FROM users WHERE username = ?";
 
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -50,36 +43,30 @@ public class MySQLUsersDao implements Users {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            throw new RuntimeException("Error finding user in the database!");
         }
 
     }
 
-
-
     @Override
     public Long insert(User user) {
-       String sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
+        //write the sql query for the insert
+        String sql = "INSERT INTO users(username, password, email) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(
+                    sql, Statement.RETURN_GENERATED_KEYS
+            );
 
-       try {
-           PreparedStatement stmt = connection.prepareStatement(
-                   sql, Statement.RETURN_GENERATED_KEYS
-           );
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getEmail());
+            stmt.executeUpdate();
 
-           stmt.setString(1, user.getUsername());
-           stmt.setString(2, user.getPassword());
-           stmt.setString(3, user.getEmail());
-           stmt.executeUpdate();
-
-           ResultSet rs = stmt.getGeneratedKeys();
-           rs.next();
-           return rs.getLong(1);
-       } catch (SQLException e) {
-           System.out.println("SQLException: " + e.getMessage());
-           System.out.println("SQLState: " + e.getSQLState());
-           System.out.println("VendorError: " + e.getErrorCode());
-       }
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting user to the database!", e);
+        }
     }
 }
